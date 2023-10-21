@@ -1,0 +1,125 @@
+package Modul2_Praktikum;
+
+import Modul1_praktikum.*;
+
+
+/**
+ *
+ * @author shafira halmahera
+ */
+public class DataArray {
+
+    private Mahasiswa[] mhs;
+    private int nElemen;
+
+    public DataArray(int max) {
+        mhs = new Mahasiswa[max];
+        nElemen = 0;
+    }
+
+    public Mahasiswa find(long searchNim) {
+        int i;
+        for (i = 0; i < nElemen; i++) {
+            if (mhs[i].getNim() == searchNim) {
+                break;
+            }
+        }
+        if (i == nElemen) {
+            return null;
+        } else {
+            return mhs[i];
+        }
+    }
+
+    public void insert(long nim, String nama, String asal) {
+        mhs[nElemen] = new Mahasiswa(nim, nama, asal);
+        nElemen++;
+    }
+
+    public boolean delete(long searchNim) {
+        int i;
+        for (i = 0; i < nElemen; i++) {
+            if (mhs[i].getNim() == searchNim) {
+                break;
+            }
+        }
+        if (i == nElemen) {
+            return false;
+        } else {
+            for (int j = i; j < nElemen; j++) {
+                mhs[j] = mhs[j + 1];
+            }
+            nElemen--;
+            return true;
+        }
+    }
+    
+// tugas praktikum modul 2
+// class DataArray dengan BubbleSort
+    
+    public void BubbleSort() {
+        int batas, i;
+        for (batas = nElemen - 1; batas > 0; batas--) {
+            for (i = 0; i < batas; i++) {
+                if (mhs[i].getNim() > mhs[i + 1].getNim()) {
+                    swap(i, i + 1);
+                }
+
+            }
+
+        }
+
+    }
+
+//    public void BubbleSortDescending() {
+//        int batas, j;
+//        for (batas = nElemen-1; batas > 0; batas--){
+//            for (j = 0; j < batas; j++) {
+//                if (mhs[j].getNim() < mhs[j + 1].getNim()) {
+//                     swap (j, j+1);
+//                 }
+//            }
+//        }
+//    }
+    
+    
+    public void SelectionSort() {
+        int awal, i, min;
+
+        for (awal = 0; awal < nElemen - 1; awal++) {
+            min = awal;
+            for (i = awal + 1; i < nElemen; i++) {
+                if (mhs[i].getNim() < mhs[min].getNim()) {
+                    min = i;
+                }
+            }
+            swap(awal, min);
+        }
+    }
+    public void InsertionSortbyName() {
+        int i, curIn;
+
+        for (curIn = 1; curIn < nElemen; curIn++) {
+            Mahasiswa temp = mhs[curIn];
+
+            i = curIn;
+            while (i > 0 && mhs[i - 1].getnama().compareTo(temp.getnama()) > 0) {
+                mhs[i] = mhs[i - 1];
+                i--;
+            }
+            mhs[i] = temp;
+        }
+    }
+
+    public void swap(int one, int two) {
+        Mahasiswa temp = mhs[one];
+        mhs[one] = mhs[two];
+        mhs[two] = temp;
+    }
+
+    public void displayArray() {
+        for (int i = 0; i < nElemen; i++) {
+            mhs[i].displayMhs();
+        }
+    }
+}
